@@ -1,6 +1,6 @@
 <?php
 
-class UserTest extends \PHPUnit\Framework\TestCase
+class FormTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testWeCanGetFields()
