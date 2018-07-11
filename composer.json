@@ -1,0 +1,21 @@
+{
+    "name": "mehdi/phpforms",
+    "description": "A set of of tools to help you create forms and get data as fast as possible",
+    "type": "project",
+    "require": {
+        "php": "^7.2",
+        "phpunit/phpunit": "^7.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mehdi Bounya",
+            "email": "contact.mehdi@pm.me"
+        }
+    ],
+    "autoload": {
+		"psr-4": {
+			"PHPForms\\": "Core"
+		}
+	}
+}
