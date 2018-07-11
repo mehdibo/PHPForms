@@ -7,12 +7,14 @@ class Validations extends Validation
     /**
      * Make sure the value is not empty
      *
+     * The passed value will be trimmed
+     *
      * @param string $value
      * @return boolean TRUE/FALSE if the value is Not empty/Empty
      */
     public function required(string $value):bool
     {
-        return !empty($value);
+        return !empty(trim($value));
     }
 
     /**
