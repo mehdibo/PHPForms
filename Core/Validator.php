@@ -104,7 +104,9 @@ class Validator
                 if ($check === false) {
                     $rules_passed = false;
                     $this->valid = false;
-                    $this->errors[] = $this->validations->getError($rule, $field_name, $args);
+                    // If no label was set use the field's name
+                    $name = $options['label'] ?? $field_name;
+                    $this->errors[] = $this->validations->getError($rule, $name, $args);
                 }
             }
 
