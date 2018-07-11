@@ -1,6 +1,6 @@
 <?php
 
-namespace \PHPForms\Tests;
+namespace PHPForms\Tests;
 
 class ValidatorTest extends \PHPUnit\Framework\TestCase
 {

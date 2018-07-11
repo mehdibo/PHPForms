@@ -1,6 +1,6 @@
 <?php
 
-namespace \PHPForms\Tests;
+namespace PHPForms\Tests;
 
 class FormTest extends \PHPUnit\Framework\TestCase
 {
