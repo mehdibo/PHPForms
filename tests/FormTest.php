@@ -1,5 +1,7 @@
 <?php
 
+namespace \PHPForms\Tests;
+
 class FormTest extends \PHPUnit\Framework\TestCase
 {
 
