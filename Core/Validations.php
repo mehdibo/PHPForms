@@ -79,11 +79,11 @@ class Validations extends Validation
     public function exactLength(string $value, string $len):bool
     {
         // Make sure $len is a number
-        if (!is_numeric($max)) {
+        if (!is_numeric($len)) {
             return false;
         }
 
-        return mb_strlen($value) === (int) $max;
+        return mb_strlen($value) === (int) $len;
     }
 
     /**
@@ -96,7 +96,7 @@ class Validations extends Validation
     public function greaterThan(string $value, string $num):bool
     {
         // Make sure $value and $num are numbers
-        if (!is_numeric($max) || !is_numberic($num)) {
+        if (!is_numeric($value) || !is_numeric($num)) {
             return false;
         }
 
@@ -113,7 +113,7 @@ class Validations extends Validation
     public function lessThan(string $value, string $num):bool
     {
         // Make sure $value and $num are numbers
-        if (!is_numeric($max) || !is_numberic($num)) {
+        if (!is_numeric($value) || !is_numeric($num)) {
             return false;
         }
 
@@ -131,7 +131,9 @@ class Validations extends Validation
         list($user, $domain) = explode('@', $value);
 
         // Convert domain name to an IDNA ASCII-compatible format
-        $domain = idn_to_ascii($domain, 0, INTL_IDNA_VARIANT_UTS46);
+        if (function_exists('idn_to_ascii')) {
+            $domain = idn_to_ascii($domain, 0, INTL_IDNA_VARIANT_UTS46);
+        }
 
         $value = $user . '@' . $domain;
 
