@@ -1,0 +1,10 @@
+### Composer ###
+composer.phar
+/vendor/
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
