@@ -11,6 +11,13 @@
                 "kind": "test",
                 "isDefault": true
             },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true
+            }
         }
     ]
 }
