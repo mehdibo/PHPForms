@@ -15,7 +15,8 @@
     ],
     "autoload": {
 		"psr-4": {
-			"PHPForms\\": "Core"
+			"PHPForms\\": "Core",
+			"PHPForms\\Tests": "tests"
 		}
 	}
 }
