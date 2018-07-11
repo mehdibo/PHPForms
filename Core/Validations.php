@@ -128,7 +128,14 @@ class Validations extends Validation
      */
     public function validEmail(string $value):bool
     {
-        list($user, $domain) = explode('@', $value);
+        $value = explode('@', $value);
+
+        // If the count is not 2 then it's not a valid email
+        if (count($value) !== 2) {
+            return false;
+        }
+
+        list($user, $domain) = $value;
 
         // Convert domain name to an IDNA ASCII-compatible format
         if (function_exists('idn_to_ascii')) {
