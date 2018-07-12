@@ -23,17 +23,6 @@ abstract class Validation
     }
 
     /**
-     * Get a rule's HTML validation
-     *
-     * For example, maxLength[5] can return an array of ['maxlength' => '5']
-     *
-     * @param string $rule  Rule's name
-     * @param string $value Value passed to parameter if any.
-     * @return array|null An array of 'attribute_name' => 'optional value' or NULL if no HTML validation is available
-     */
-    abstract public function getHTMLValidation(string $rule, string $value = null):?array;
-
-    /**
      * Get error for a rule
      *
      * @param string $rule       Rule name
