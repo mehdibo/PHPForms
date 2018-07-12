@@ -77,12 +77,19 @@ class Validator
         foreach ($this->form->getFields() as $field_name => $options) {
             // Data is always valid if there are no rules
             if (empty($options['rules'])) {
-                $this->valid_data[$field_name] = $this->data[$field_name];
+                if (isset($this->data[$field_name])) {
+                    $this->valid_data[$field_name] = $this->data[$field_name];
+                }
                 continue;
             }
 
             // Get the field's rules and execute them all
             $rules = explode('|', $options['rules']);
+
+            // Should we ignore this field?
+            if ($rules[0] === 'ignore') {
+                continue;
+            }
 
             // This will change to false as soon as one rule fails
             $rules_passed = true;
