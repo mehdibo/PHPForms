@@ -82,7 +82,7 @@ class Form
         // Create inputs
         foreach ($this->fields as $name => $data) {
             // Create Input element
-            $input = $html->createElement('input');
+            $input = ($data['type'] === 'textarea') ? $html->createElement('textarea') : $html->createElement('input');
             $input->setAttribute('name', $name);
             // If no type was set use 'text'
             $input->setAttribute('type', $data['type'] ?? 'text');

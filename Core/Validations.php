@@ -4,6 +4,45 @@ namespace PHPForms;
 
 class Validations extends Validation
 {
+
+    /**
+     * Get a rule's HTML validation
+     *
+     * For example, maxLength[5] can return an array of ['maxlength' => '5']
+     *
+     * @param string $rule  Rule's name
+     * @param string $value Value passed to parameter if any.
+     * @return array|null An array of 'attribute_name' => 'optional value' or NULL if no HTML validation is available
+     */
+    public function getHTMLValidation(string $rule, string $value = null):?array
+    {
+
+        switch ($rule) {
+            case 'required':
+                $attr = ['required' => ''];
+                break;
+
+            case 'minLength':
+                $attr = ['minlength' => $value];
+                break;
+
+            case 'greaterThan':
+                $attr = ['min' => $value];
+                break;
+
+            case 'lessThan':
+                $attr = ['max' => $value];
+                break;
+            
+            default:
+                $attr = [];
+                break;
+        }
+
+        return $attr;
+    }
+
+
     /**
      * Make sure the value is not empty
      *
