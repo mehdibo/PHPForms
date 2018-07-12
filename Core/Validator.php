@@ -72,8 +72,9 @@ class Validator
 
         // Loop through form fields and validate passed data
         foreach ($form_fields as $field_name => $options) {
-            // If there are no rules skip
+            // If there are no rules add it to valid data and skip checkings
             if (empty($options['rules'])) {
+                $this->valid_data[$field_name] = $this->data[$field_name];
                 continue;
             }
 
