@@ -81,6 +81,8 @@ class Form
 
         // Create inputs
         foreach ($this->fields as $name => $options) {
+            // Set default type
+            $options['type'] = $options['type'] ?? 'text';
             // Create Input element
             $input = $html->createElement(($options['type'] === 'textarea') ? 'textarea' : 'input');
             $input->setAttribute('name', $name);
