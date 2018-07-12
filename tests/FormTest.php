@@ -36,6 +36,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
         $form = new \PHPForms\Form($fields, $attribs);
 
         $this->assertEquals($fields, $form->getFields());
+        $this->assertEquals($fields['field_a'], $form->getField('field_a'));
     }
 
     public function testWeCanAddFields()

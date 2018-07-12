@@ -52,6 +52,16 @@ class Form
     }
 
     /**
+     * Get field
+     *
+     * @return array|null Field's option or NULL if no field was found
+     */
+    public function getField(string $name):?array
+    {
+        return (empty($this->fields[$name])) ? null : $this->fields[$name];
+    }
+
+    /**
      * Get fields
      *
      * @return array|null Array of fields or NULL if no fields are found
