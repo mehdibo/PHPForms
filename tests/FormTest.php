@@ -35,7 +35,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
 
         $form = new \PHPForms\Form($fields, $attribs);
 
-        $this->assertEquals($form->getFields(), $fields);
+        $this->assertEquals($fields, $form->getFields());
     }
 
     public function testWeCanAddFields()
@@ -58,7 +58,7 @@ class FormTest extends \PHPUnit\Framework\TestCase
 
         $form->addField('input', $options);
 
-        $this->assertEquals($form->getFields(), $expected_fields);
+        $this->assertEquals($expected_fields, $form->getFields());
     }
 
     public function testWeCanGetValidHtml()
@@ -99,13 +99,13 @@ HTML;
 
         $form = new \PHPForms\Form($fields, $attribs);
 
-        $this->assertEquals($form->getHTML(), $expected_html);
+        $this->assertEquals($expected_html, $form->getHTML());
 
         $expected_html = <<<HTML
 <form action="./index.php" class="a_class" id="&lt;id&gt;" method="POST"><input name="field_a" type="text" placeholder="Field A" class="a_class" id="an_id"><input name="field_b" type="text"><input name="field_c" type="text" class="&lt;danger'&quot;&gt;"></form>
 
 HTML;
 
-        $this->assertEquals($form->getHTML(false), $expected_html);
+        $this->assertEquals($expected_html, $form->getHTML(false));
     }
 }
