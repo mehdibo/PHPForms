@@ -37,16 +37,26 @@ $fields = [
 
 $form = new \PHPForms\Form($fields, ['action' => './example.php']);
 
+echo $form->getHTML();
+
 // Validate form
 if (!empty($_POST)) {
     $errors = include "./Core/errors.php";
     $validations = new \PHPForms\Validations($errors);
     $validator = new \PHPForms\Validator($form, $_POST, $validations);
 
-    $validator->validate();
+    if (!$validator->isValid()) {
+        echo '<h4>Errors:</h4>';
+        foreach ($validator->getErrors() as $error) {
+            echo htmlspecialchars($error).'<br />';
+        }
+    }
 
-    var_dump($validator->getErrors(), $validator->getValidData());
+    $data = $validator->getValidData();
+    if (!empty($data)) {
+        echo '<h4>Valid data:</h4>';
+        foreach ($data as $name => $value) {
+            echo htmlspecialchars($name).': '.htmlspecialchars($value).'<br />';
+        }
+    }
 }
-
-
-echo $form->getHTML();
