@@ -6,99 +6,436 @@ class ValidationsTest extends \PHPUnit\Framework\TestCase
 {
     public function testRequiredRuleWorks()
     {
+        $tests = [
+            [
+                'data' => 'Hello!',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '',
+                'expected_result' => false,
+            ],
+            [
+                'data' => '    ',
+                'expected_result' => false,
+            ],
+            [
+                'data' => "\t\n",
+                'expected_result' => false,
+            ],
+        ];
+
         $validations = new \PHPForms\Validations([]);
-
-        $this->assertEquals(true, $validations->required('Valid'));
-
-        $this->assertEquals(false, $validations->required(''));
-        $this->assertEquals(false, $validations->required('   '));
+        foreach ($tests as $test) {
+            $this->assertEquals($test['expected_result'], $validations->required($test['data']));
+        }
     }
 
     public function testInListRuleWorks()
     {
-        $validations = new \PHPForms\Validations([]);
-
+        $tests = [
+            [
+                'data' => 'valid1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'v@lid2',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'valid-3',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'valid_4',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'và°lid5',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '    ',
+                'expected_result' => true,
+            ],
+            [
+                'data' => "\t\n",
+                'expected_result' => true,
+            ],
+            [
+                'data' => "valid 1",
+                'expected_result' => false,
+            ],
+            [
+                'data' => "INVALID OPTION",
+                'expected_result' => false,
+            ],
+        ];
         $options = 'valid1,v@lid2,valid-3,valid_4,và°lid5';
 
-        $this->assertEquals(true, $validations->inList('valid1', $options));
-        $this->assertEquals(true, $validations->inList('v@lid2', $options));
-        $this->assertEquals(true, $validations->inList('valid-3', $options));
-        $this->assertEquals(true, $validations->inList('valid_4', $options));
-        $this->assertEquals(true, $validations->inList('và°lid5', $options));
-        $this->assertEquals(false, $validations->inList('Invalid', $options));
+        $validations = new \PHPForms\Validations([]);
+        foreach ($tests as $test) {
+            $this->assertEquals($test['expected_result'], $validations->inList($test['data'], $options));
+        }
     }
 
     public function testMinLengthRuleWorks()
     {
+        $tests = [
+            [
+                'data' => 'Mehdi',
+                'len'  => '2',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'Mehdi',
+                'len'  => '5',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'Mehdi',
+                'len'  => '10',
+                'expected_result' => false,
+            ],
+
+            [
+                'data' => 'За работой',
+                'len'  => '2',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'За работой',
+                'len'  => '10',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'За работой',
+                'len'  => '11',
+                'expected_result' => false,
+            ],
+
+            [
+                'data' => '加工 加工',
+                'len'  => '2',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '加工 加工',
+                'len'  => '5',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '加工 加工',
+                'len'  => '10',
+                'expected_result' => false,
+            ],
+
+            [
+                'data' => '     ',
+                'len'  => '1000',
+                'expected_result' => true,
+            ],
+            [
+                'data' => "\t\n",
+                'len'  => '1000',
+                'expected_result' => true,
+            ],
+            [
+                'data' => ' ',
+                'len'  => '1000',
+                'expected_result' => true,
+            ],
+        ];
+
         $validations = new \PHPForms\Validations([]);
-
-        $this->assertEquals(true, $validations->minLength('За работой', '10'));
-        $this->assertEquals(true, $validations->minLength('يعمل', '4'));
-        $this->assertEquals(true, $validations->minLength('Wor king', '8'));
-
-
-        $this->assertEquals(false, $validations->minLength('За работой', '12'));
-        $this->assertEquals(false, $validations->minLength('يعمل', '5'));
-        $this->assertEquals(false, $validations->minLength('Wor king', '10'));
-        $this->assertEquals(false, $validations->minLength('', '1'));
+        foreach ($tests as $test) {
+            $this->assertEquals($test['expected_result'], $validations->minLength($test['data'], $test['len']));
+        }
     }
 
     public function testMaxLengthRuleWorks()
     {
+        $tests = [
+            [
+                'data' => 'Mehdi',
+                'len'  => '6',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'Mehdi',
+                'len'  => '5',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'Mehdi',
+                'len'  => '2',
+                'expected_result' => false,
+            ],
+
+            [
+                'data' => 'За работой',
+                'len'  => '11',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'За работой',
+                'len'  => '10',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'За работой',
+                'len'  => '2',
+                'expected_result' => false,
+            ],
+
+            [
+                'data' => '加工 加工',
+                'len'  => '6',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '加工 加工',
+                'len'  => '5',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '加工 加工',
+                'len'  => '2',
+                'expected_result' => false,
+            ],
+
+            [
+                'data' => '     ',
+                'len'  => '1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => "\t\n",
+                'len'  => '1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => ' ',
+                'len'  => '0',
+                'expected_result' => true,
+            ],
+        ];
+
         $validations = new \PHPForms\Validations([]);
-
-        $this->assertEquals(true, $validations->maxLength('За работой', '10'));
-        $this->assertEquals(true, $validations->maxLength('يعمل', '4'));
-        $this->assertEquals(true, $validations->maxLength('Wor king', '9'));
-
-
-        $this->assertEquals(false, $validations->maxLength('За работой', '9'));
-        $this->assertEquals(false, $validations->maxLength('يعمل', '3'));
-        $this->assertEquals(false, $validations->maxLength('Wor king', '7'));
+        foreach ($tests as $test) {
+            $this->assertEquals($test['expected_result'], $validations->maxLength($test['data'], $test['len']));
+        }
     }
 
     public function testExactLengthRuleWorks()
     {
+        $tests = [
+            [
+                'data' => 'Mehdi',
+                'len'  => '5',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'Mehdi',
+                'len'  => '6',
+                'expected_result' => false,
+            ],
+            [
+                'data' => 'Mehdi',
+                'len'  => '4',
+                'expected_result' => false,
+            ],
+
+            [
+                'data' => 'За работой',
+                'len'  => '10',
+                'expected_result' => true,
+            ],
+            [
+                'data' => 'За работой',
+                'len'  => '11',
+                'expected_result' => false,
+            ],
+            [
+                'data' => 'За работой',
+                'len'  => '9',
+                'expected_result' => false,
+            ],
+
+            [
+                'data' => '加工 加工',
+                'len'  => '5',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '加工 加工',
+                'len'  => '6',
+                'expected_result' => false,
+            ],
+            [
+                'data' => '加工 加工',
+                'len'  => '4',
+                'expected_result' => false,
+            ],
+
+            [
+                'data' => '     ',
+                'len'  => '1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => "\t\n",
+                'len'  => '1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => ' ',
+                'len'  => '8',
+                'expected_result' => true,
+            ],
+        ];
+
         $validations = new \PHPForms\Validations([]);
-
-        $this->assertEquals(true, $validations->exactLength('За работой', '10'));
-        $this->assertEquals(true, $validations->exactLength('يعمل', '4'));
-        $this->assertEquals(true, $validations->exactLength('Wor king', '8'));
-
-
-        $this->assertEquals(false, $validations->exactLength('За работой', '12'));
-        $this->assertEquals(false, $validations->exactLength('يعمل', '5'));
-        $this->assertEquals(false, $validations->exactLength('Wor king', '10'));
-        $this->assertEquals(false, $validations->exactLength('', '1'));
+        foreach ($tests as $test) {
+            $this->assertEquals($test['expected_result'], $validations->exactLength($test['data'], $test['len']));
+        }
     }
 
     public function testGreaterThanRuleWorks()
     {
+        $tests = [
+            [
+                'data' => '5',
+                'len'  => '1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '12.5',
+                'len'  => '12',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '100.02',
+                'len'  => '100',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '100.09',
+                'len'  => '100.08',
+                'expected_result' => true,
+            ],
+
+            [
+                'data' => '1',
+                'len'  => '5',
+                'expected_result' => false,
+            ],
+            [
+                'data' => '12',
+                'len'  => '12.5',
+                'expected_result' => false,
+            ],
+            [
+                'data' => '100',
+                'len'  => '100.02',
+                'expected_result' => false,
+            ],
+            [
+                'data' => '100.08',
+                'len'  => '100.09',
+                'expected_result' => false,
+            ],
+
+            [
+                'data' => '     ',
+                'len'  => '1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => "\t\n",
+                'len'  => '1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => ' ',
+                'len'  => '0',
+                'expected_result' => true,
+            ],
+        ];
+
         $validations = new \PHPForms\Validations([]);
-
-        $this->assertEquals(true, $validations->greaterThan('5', '1'), true);
-        $this->assertEquals(true, $validations->greaterThan('12.5', '12'), true);
-        $this->assertEquals(true, $validations->greaterThan('100.02', '100'), true);
-
-
-        $this->assertEquals(false, $validations->greaterThan('1', '10'));
-        $this->assertEquals(false, $validations->greaterThan('63.9', '64'));
-        $this->assertEquals(false, $validations->greaterThan('30.05', '30.1'));
+        foreach ($tests as $test) {
+            $this->assertEquals($test['expected_result'], $validations->greaterThan($test['data'], $test['len']));
+        }
     }
 
 
     public function testLessThanRuleWorks()
     {
+        $tests = [
+            [
+                'data' => '5',
+                'len'  => '1',
+                'expected_result' => false,
+            ],
+            [
+                'data' => '12.5',
+                'len'  => '12',
+                'expected_result' => false,
+            ],
+            [
+                'data' => '100.02',
+                'len'  => '100',
+                'expected_result' => false,
+            ],
+            [
+                'data' => '100.09',
+                'len'  => '100.08',
+                'expected_result' => false,
+            ],
+
+            [
+                'data' => '1',
+                'len'  => '5',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '12',
+                'len'  => '12.5',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '100',
+                'len'  => '100.02',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '100.08',
+                'len'  => '100.09',
+                'expected_result' => true,
+            ],
+
+            [
+                'data' => '     ',
+                'len'  => '1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => "\t\n",
+                'len'  => '1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => ' ',
+                'len'  => '0',
+                'expected_result' => true,
+            ],
+        ];
+
         $validations = new \PHPForms\Validations([]);
-
-        $this->assertEquals(true, $validations->lessThan('1', '10'));
-        $this->assertEquals(true, $validations->lessThan('63.9', '64'));
-        $this->assertEquals(true, $validations->lessThan('30.05', '30.1'));
-
-
-        $this->assertEquals(false, $validations->lessThan('5', '1'));
-        $this->assertEquals(false, $validations->lessThan('12.5', '12'));
-        $this->assertEquals(false, $validations->lessThan('100.02', '100'));
+        foreach ($tests as $test) {
+            $this->assertEquals($test['expected_result'], $validations->lessThan($test['data'], $test['len']));
+        }
     }
 
 
@@ -117,7 +454,7 @@ class ValidationsTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals($expected_result, $validations->validEmail($email));
         }
 
-        $this->assertEquals(false, $validations->validEmail(''));
+        $this->assertEquals(true, $validations->validEmail(''));
     }
 
     public function testWeCanGetErrorMessages()
