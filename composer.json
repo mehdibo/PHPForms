@@ -1,9 +1,14 @@
 {
     "name": "mehdi/phpforms",
-    "description": "A set of of tools to help you create forms and get data as fast as possible",
+    "description": "A set of of tools to help you create forms and export data as fast as possible",
     "type": "project",
+    "keywords": [
+        "forms", "database", "forms-builder"
+    ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.2"
+    },
+    "require-dev": {
         "phpunit/phpunit": "^7.2"
     },
     "license": "MIT",
@@ -16,7 +21,7 @@
     "autoload": {
 		"psr-4": {
 			"PHPForms\\": "Core",
-			"PHPForms\\Tests": "tests"
+			"PHPForms\\Tests\\": "tests"
 		}
 	}
 }
