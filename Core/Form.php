@@ -25,7 +25,7 @@ class Form
     /**
      * Create form object
      *
-     * @param array $fields  Array of fields and its data
+     * @param array $fields  Array of fields and its options
      * @param array $attribs Array of form attributes
      */
     public function __construct(array $fields = [], array $attribs = [])
@@ -80,20 +80,20 @@ class Form
         }
 
         // Create inputs
-        foreach ($this->fields as $name => $data) {
+        foreach ($this->fields as $name => $options) {
             // Create Input element
-            $input = ($data['type'] === 'textarea') ? $html->createElement('textarea') : $html->createElement('input');
+            $input = ($options['type'] === 'textarea') ? $html->createElement('textarea') : $html->createElement('input');
             $input->setAttribute('name', $name);
             // If no type was set use 'text'
-            $input->setAttribute('type', $data['type'] ?? 'text');
+            $input->setAttribute('type', $options['type'] ?? 'text');
             // Add Label to placeholder if available
-            if (!empty($data['label'])) {
-                $input->setAttribute('placeholder', $data['label']);
+            if (!empty($options['label'])) {
+                $input->setAttribute('placeholder', $options['label']);
             }
 
             // Add attributes if any
-            if (!empty($data['attribs'])) {
-                foreach ($data['attribs'] as $attrib => $value) {
+            if (!empty($options['attribs'])) {
+                foreach ($options['attribs'] as $attrib => $value) {
                     $input->setAttribute($attrib, $value);
                 }
             }
