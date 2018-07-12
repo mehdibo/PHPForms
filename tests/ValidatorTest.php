@@ -45,6 +45,12 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
                 'type'  => 'text',
                 'rules' => 'inList[option1,option2]'
             ],
+            'ignored_field' => [
+                'rules' => 'ignore'
+            ],
+            'no_rules' => [
+                'rules' => ''
+            ],
         ];
 
         $this->form = new \PHPForms\Form($fields);
@@ -64,6 +70,8 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
                     'label_not_exists'  => 'Also this',
                     'required_options'  => 'option1',
                     'optional_options'  => '',
+                    'ignored_field'     => '',
+                    'no_rules'          => 'Value',
                 ],
                 'expected_result' => true,
             ],
@@ -73,6 +81,8 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
                     'label_not_exists'  => 'Required too',
                     'required_options'  => 'option1',
                     'optional_options'  => 'option2',
+                    'ignored_field'     => 'Hello',
+                    'no_rules'          => '',
                 ],
                 'expected_result' => true,
             ],
@@ -111,12 +121,15 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
                     'label_not_exists'  => 'Also this',
                     'required_options'  => 'option1',
                     'optional_options'  => '',
+                    'ignored_field'     => 'Value',
+                    'no_rules'          => '',
                 ],
                 'expected_result' => [
                     'label_exists'      => 'This field is required',
                     'label_not_exists'  => 'Also this',
                     'required_options'  => 'option1',
                     'optional_options'  => '',
+                    'no_rules'          => '',
                 ],
             ],
             [
@@ -125,10 +138,12 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
                     'label_not_exists'  => '',
                     'required_options'  => 'option1',
                     'optional_options'  => '',
+                    'no_rules'          => 'Hello',
                 ],
                 'expected_result' => [
                     'required_options'  => 'option1',
                     'optional_options'  => '',
+                    'no_rules'          => 'Hello',
                 ],
             ],
             [
