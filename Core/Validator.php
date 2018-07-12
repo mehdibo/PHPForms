@@ -61,53 +61,35 @@ class Validator
         $this->validations = $validations;
     }
 
-    public function validate():bool
+    /**
+     * Check if the passed data is valid
+     *
+     * @return boolean TRUE/FALSE if valid/not valid
+     */
+    public function isValid():bool
     {
         // Check for cached validation result
         if ($this->valid !== null) {
             return $this->valid;
         }
 
-        $form_fields = $this->form->getFields();
-
         // Loop through form fields and validate passed data
-        foreach ($form_fields as $field_name => $options) {
-            // If there are no rules add it to valid data and skip checkings
+        foreach ($this->form->getFields() as $field_name => $options) {
+            // Data is always valid if there are no rules
             if (empty($options['rules'])) {
                 $this->valid_data[$field_name] = $this->data[$field_name];
                 continue;
             }
 
+            // Get the field's rules and execute them all
             $rules = explode('|', $options['rules']);
+
             // This will change to false as soon as one rule fails
             $rules_passed = true;
-            // Loop through rules and execute them
             foreach ($rules as $rule) {
-                // Extract arguments (the [...] part)
-                preg_match('/\[(.+)\]/m', $rule, $matches);
-
-                $args = null;
-                // If there are arguments
-                if (!empty($matches)) {
-                    // Get rule name (remove the arguments part)
-                    $rule = str_replace($matches[0], '', $rule);
-                    $args = $matches[1];
-                }
-
-                // Check if the validation rule exists
-                if (!method_exists($this->validations, $rule)) {
-                    throw new RuleNotFound("Rule '$rule' does not exist.");
-                }
-
-                // Do the validation and get error if failed
-                $check = call_user_func_array([$this->validations, $rule], [$this->data[$field_name], $args]);
-                
-                if ($check === false) {
+                if (!$this->executeRule($rule, $field_name)) {
                     $rules_passed = false;
                     $this->valid = false;
-                    // If no label was set use the field's name
-                    $name = $options['label'] ?? $field_name;
-                    $this->errors[] = $this->validations->getError($rule, $name, $args);
                 }
             }
 
@@ -124,11 +106,55 @@ class Validator
     }
 
     /**
+     * Execute a rule
+     *
+     * @param string $rule Rule to execute
+     * @param string $field_name Field to validate
+     * @return boolean TRUE/FALSE if the data passed/didn't pass the rule
+     */
+    private function executeRule(string $rule, string $field_name):bool
+    {
+        // If the data for this field was not passed set it to an empty string
+        $this->data[$field_name] = $this->data[$field_name] ?? '';
+
+        // Extract arguments (the [...] part)
+        preg_match('/\[(.+)\]/m', $rule, $matches);
+
+        // If there are arguments seperate the rule from the args
+        if (!empty($matches)) {
+            $rule = str_replace($matches[0], '', $rule);
+        }
+
+        // Get the args if any or set it to null
+        $args = $matches[1] ?? null;
+
+        // Check if the validation rule exists
+        if (!method_exists($this->validations, $rule)) {
+            throw new RuleNotFound("Rule '$rule' does not exist.");
+        }
+
+        // Do the validation return true if succeeded
+        if (call_user_func_array([$this->validations, $rule], [$this->data[$field_name], $args])) {
+            return true;
+        }
+
+        // Validation failed get the error message
+
+        $field = $this->form->getField($field_name);
+        // If no label was passed use the name
+        $name = (empty($field['label'])) ? $field_name : $field['label'];
+
+        $this->errors[] = $this->validations->getError($rule, $name, $args);
+
+        return false;
+    }
+
+    /**
      * Get validated data
      *
      * This will only return the data listed in the form's fields
      * And that passed the rules.
-     * Must be called after validate()
+     * Must be called after isValid()
      *
      * @return array
      */
@@ -140,7 +166,7 @@ class Validator
     /**
      * Get validation errors
      *
-     * Must be called after validate()
+     * Must be called after isValid()
      *
      * @return array If no errors were found it will return an empty array
      */
