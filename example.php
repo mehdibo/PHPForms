@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
 
 error_reporting(-1);
-ini_set('display_errors', 1);
+ini_set('display_errors', '1');
 
 include "vendor/autoload.php";
 
@@ -50,13 +51,16 @@ if (!empty($_POST)) {
         foreach ($validator->getErrors() as $error) {
             echo htmlspecialchars($error).'<br />';
         }
-    }
+    } else {
+        $data = $validator->getValidData();
+        $exportCSV = new \PHPForms\ExportCSV('./data.csv', $data);
+        $exportCSV->setMap([
+            'name' => 'First name',
+            'email' => 'E-mail',
+            'age'   => 'Age',
+            'message' => 'Comment',
+        ]);
 
-    $data = $validator->getValidData();
-    if (!empty($data)) {
-        echo '<h4>Valid data:</h4>';
-        foreach ($data as $name => $value) {
-            echo htmlspecialchars($name).': '.htmlspecialchars($value).'<br />';
-        }
+        $exportCSV->export();
     }
 }
