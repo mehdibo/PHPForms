@@ -65,6 +65,11 @@ class Validations extends Validation
      */
     public function inList(string $value, string $list):bool
     {
+        // If empty value then it's valid (so that optional inputs are possible)
+        if (empty(trim($value))) {
+            return true;
+        }
+
         $list = explode(',', $list);
 
         return in_array($value, $list);
@@ -81,6 +86,11 @@ class Validations extends Validation
      */
     public function minLength(string $value, string $min):bool
     {
+        // If empty value then it's valid (so that optional inputs are possible)
+        if (empty(trim($value))) {
+            return true;
+        }
+
         // Make sure $min is a number
         if (!is_numeric($min)) {
             return false;
@@ -100,6 +110,11 @@ class Validations extends Validation
      */
     public function maxLength(string $value, string $max):bool
     {
+        // If empty value then it's valid (so that optional inputs are possible)
+        if (empty(trim($value))) {
+            return true;
+        }
+
         // Make sure $max is a number
         if (!is_numeric($max)) {
             return false;
@@ -117,6 +132,11 @@ class Validations extends Validation
      */
     public function exactLength(string $value, string $len):bool
     {
+        // If empty value then it's valid (so that optional inputs are possible)
+        if (empty(trim($value))) {
+            return true;
+        }
+
         // Make sure $len is a number
         if (!is_numeric($len)) {
             return false;
@@ -134,6 +154,11 @@ class Validations extends Validation
      */
     public function greaterThan(string $value, string $num):bool
     {
+        // If empty value then it's valid (so that optional inputs are possible)
+        if (empty(trim($value))) {
+            return true;
+        }
+
         // Make sure $value and $num are numbers
         if (!is_numeric($value) || !is_numeric($num)) {
             return false;
@@ -151,6 +176,11 @@ class Validations extends Validation
      */
     public function lessThan(string $value, string $num):bool
     {
+        // If empty value then it's valid (so that optional inputs are possible)
+        if (empty(trim($value))) {
+            return true;
+        }
+
         // Make sure $value and $num are numbers
         if (!is_numeric($value) || !is_numeric($num)) {
             return false;
@@ -167,6 +197,11 @@ class Validations extends Validation
      */
     public function validEmail(string $value):bool
     {
+        // If empty value then it's valid (so that optional inputs are possible)
+        if (empty(trim($value))) {
+            return true;
+        }
+
         $value = explode('@', $value);
 
         // If the count is not 2 then it's not a valid email
