@@ -12,7 +12,7 @@ return [
     'minLength'   => 'The {field} field must be at least {params} characters long.',
     'maxLength'   => 'The {field} field must not be more than {params} characters long.',
     'exactLength' => 'The {field} field must be exactly {params} characters long.',
-    'greaterThan' => 'The {field} field must be bigger than {params}.',
+    'greaterThan' => 'The {field} field must be greater than {params}.',
     'lessThan'    => 'The {field} field must be less than {params}.',
     'validEmail'  => 'The {field} field must be a valid e-mail.',
 ];
