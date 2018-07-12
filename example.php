@@ -33,6 +33,7 @@ $fields = [
     'submit' => [
         'label'   => 'Submit',
         'type'    => 'submit',
+        'rules'    => 'ignore',
     ],
 ];
 
