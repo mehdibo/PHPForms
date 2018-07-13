@@ -1,10 +1,12 @@
 {
     "name": "mehdi/phpforms",
     "description": "A set of of tools to help you create forms and export data as fast as possible",
-    "type": "project",
+    "type": "library",
     "keywords": [
         "forms", "database", "forms-builder"
     ],
+    "homepage": "https://github.com/mehdibo/PHPForms",
+    "readme": "./README.md",
     "require": {
         "php": "^7.2"
     },
@@ -15,9 +17,14 @@
     "authors": [
         {
             "name": "Mehdi Bounya",
-            "email": "contact.mehdi@pm.me"
+            "email": "contact.mehdi@pm.me",
+            "role": "developer"
         }
     ],
+    "support": {
+        "issues": "https://github.com/mehdibo/PHPForms/issues",
+        "wiki": "https://github.com/mehdibo/PHPForms/wiki"
+    },
     "autoload": {
 		"psr-4": {
 			"PHPForms\\": "src",
