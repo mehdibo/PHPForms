@@ -41,7 +41,10 @@ class ExportCSV implements Exporter
     /**
      * Add data to export
      *
-     * @param string $name  Column name
+     * The field name is used to decide the column by default,
+     * But you can map it to a different column using the setMap() method
+     *
+     * @param string $name  Field name
      * @param string $value Value
      * @return void
      */
