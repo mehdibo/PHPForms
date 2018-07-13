@@ -72,7 +72,7 @@ class ExportCSV implements Exporter
      * @param bool $append TRUE to append data if the file exists and false to write a new one
      * @return boolean TRUE if exported successfully or FALSE otherwise
      */
-    public function export($append = true):bool
+    public function export(bool $append = true):bool
     {
         // If the file doesn't exist or $append is false create a new file
         if (!file_exists($this->file_path) || !$append) {
