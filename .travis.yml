@@ -8,3 +8,8 @@ before_script:
 
 script:
   - vendor/bin/phpunit --testdox
+
+branches:
+  only:
+    - develop
+    - master
