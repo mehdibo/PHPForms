@@ -8,29 +8,29 @@ This library or set of tools is for people who want to setup a form, validate it
 ### Creating the form
 The first step is to create a `\PHPForms\Form()` object, this object represents your form and it's fields.
 ```php
-	// These are the form's fields
-	$fields = [
-		// This is the name's attribute value
-		'field_name' => [ 
-			// This label is used as a placeholder when creating the HTML code
-			'label' => 'Label goes here', 
-			// Input's type, you can also create a textarea by setting it to textarea
-			'type'  => 'text',
-			// List of validation rules for this field
-			'rules' => 'rule1|rule2[arg1, arg2]',
-			// An array of attributes to use when creating the HTML code
-			'attribs' => [
-				'attrib_name' => 'attrib-value',
-			],
-		],
-	];
+// These are the form's fields
+$fields = [
+    // This is the name's attribute value
+    'field_name' => [ 
+        // This label is used as a placeholder when creating the HTML code
+        'label' => 'Label goes here', 
+        // Input's type, you can also create a textarea by setting it to textarea
+        'type'  => 'text',
+        // List of validation rules for this field
+        'rules' => 'rule1|rule2[arg1, arg2]',
+        // An array of attributes to use when creating the HTML code
+        'attribs' => [
+            'attrib_name' => 'attrib-value',
+        ],
+    ],
+];
 
-	// Form attributes are used when creating the HTML code (optional)
-	$attributes = [
-		'attrib_name' => 'attrib-calue',
-	];
-	
-    $form = new \PHPForms\Form($fields, $attributes);
+// Form attributes are used when creating the HTML code (optional)
+$attributes = [
+    'attrib_name' => 'attrib-calue',
+];
+
+$form = new \PHPForms\Form($fields, $attributes);
 ```
 Now that you created your form, you can (optionally) generate it's HTML code using.
 
