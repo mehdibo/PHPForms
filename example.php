@@ -43,7 +43,7 @@ echo $form->getHTML();
 
 // Validate form
 if (!empty($_POST)) {
-    $errors = include "./Core/errors.php";
+    $errors = include "./src/errors.php";
     $validations = new \PHPForms\Validations($errors);
     $validator = new \PHPForms\Validator($form, $_POST, $validations);
 
