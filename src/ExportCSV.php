@@ -89,6 +89,6 @@ class ExportCSV extends Exporter
         }
 
         // Put them into the file
-        return !(fputcsv($file, $fields) === false || fputcsv($file, $data) === false);
+        return fputcsv($file, $fields) && fputcsv($file, $data);
     }
 }
