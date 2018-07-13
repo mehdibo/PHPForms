@@ -2,7 +2,7 @@
 
 namespace PHPForms;
 
-class ExportCSV implements Exporter
+class ExportCSV extends Exporter
 {
     /**
      * CSV file path
@@ -10,20 +10,6 @@ class ExportCSV implements Exporter
      * @var string
      */
     private $file_path;
-
-    /**
-     * Data to export
-     *
-     * @var array
-     */
-    private $data;
-
-    /**
-     * Fields map
-     *
-     * @var array
-     */
-    private $map;
 
     /**
      *
@@ -39,43 +25,14 @@ class ExportCSV implements Exporter
     }
 
     /**
-     * Add data to export
-     *
-     * The field name is used to decide the column by default,
-     * But you can map it to a different column using the setMap() method
-     *
-     * @param string $name  Field name
-     * @param string $value Value
-     * @return void
-     */
-    public function addData(string $name, string $value):void
-    {
-        $this->data[$name] = $value;
-    }
-
-    /**
-     * Set map for fields
-     *
-     * Map fields to different columns
-     *
-     * @param array $map An array of 'field_name' => 'column_name'
-     * @return void
-     */
-    public function setMap(array $map):void
-    {
-        $this->map = $map;
-    }
-
-    /**
      * Export data
      *
-     * @param bool $append TRUE to append data if the file exists and false to write a new one
      * @return boolean TRUE if exported successfully or FALSE otherwise
      */
-    public function export(bool $append = true):bool
+    public function export():bool
     {
         // If the file doesn't exist or $append is false create a new file
-        if (!file_exists($this->file_path) || !$append) {
+        if (!file_exists($this->file_path)) {
             return $this->newFile();
         }
 
