@@ -3,6 +3,7 @@ This library or set of tools is for people who want to setup a form, validate it
 ## Contents
 
  - [Usage](#usage)
+ - [Documentation](https://github.com/mehdibo/PHPForms/wiki)
 
 ## Usage
 ### Creating the form
