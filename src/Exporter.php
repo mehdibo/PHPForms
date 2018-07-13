@@ -2,8 +2,22 @@
 
 namespace PHPForms;
 
-interface Exporter
+abstract class Exporter
 {
+    /**
+     * Data to export
+     *
+     * @var array
+     */
+    protected $data;
+
+    /**
+     * Fields map
+     *
+     * @var array
+     */
+    protected $map;
+
     /**
      * Add data to export
      *
@@ -11,7 +25,10 @@ interface Exporter
      * @param string $value Value
      * @return void
      */
-    public function addData(string $name, string $value):void;
+    public function addData(string $name, string $value):void
+    {
+        $this->data[$name] = $value;
+    }
 
     /**
      * Set map for fields
@@ -21,7 +38,10 @@ interface Exporter
      * @param array $map An array of 'field_name' => 'column_name'
      * @return void
      */
-    public function setMap(array $map):void;
+    public function setMap(array $map):void
+    {
+        $this->map = $map;
+    }
 
 
     /**
@@ -29,5 +49,5 @@ interface Exporter
      *
      * @return boolean TRUE if exported successfully or FALSE otherwise
      */
-    public function export():bool;
+    abstract public function export():bool;
 }
