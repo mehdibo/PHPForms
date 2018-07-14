@@ -8,7 +8,7 @@ services:
 
 before_install:
   - mysql -e 'CREATE DATABASE `phpforms_test`;'
-  - mysql -e 'DROP TABLE IF EXISTS `phpforms_test`.`testing`;
+  - mysql -e 'DROP TABLE IF EXISTS `phpforms_test`.`testing`;'
   - mysql -e 'CREATE TABLE IF NOT EXISTS `phpforms_test`.`testing` ( `id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(25) NOT NULL, `email` varchar(255) NOT NULL, `age` tinyint(3) UNSIGNED NOT NULL, `message` text NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;'
 
 before_script:
