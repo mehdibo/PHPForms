@@ -61,7 +61,7 @@ class ExportDB extends Exporter
         }
 
         // Prepare data to be concatenated to the query
-        $table = '`'.str_replace("\`", "``", $this->table).'`';
+        $table = '`'.str_replace("`", "``", $this->table).'`';
         $columns = implode(', ', $columns);
         $values = implode(', ', $values);
 
