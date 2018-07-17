@@ -39,4 +39,14 @@ abstract class Validation
 
         return str_replace(['{field}', '{params}'], [$field_name, $params], $this->errors[$rule]);
     }
+
+    /**
+     * Prevent using 'ignore' as a rule name
+     *
+     * @return boolean
+     */
+    final public function ignore():bool
+    {
+        return true;
+    }
 }
