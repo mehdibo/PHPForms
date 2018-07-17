@@ -25,6 +25,17 @@ class ExportCSV extends Exporter
     }
 
     /**
+     * Set file path
+     *
+     * @param string $file_path File path
+     * @return void
+     */
+    public function setFilePath(string $file_path):void
+    {
+        $this->file_path = $file_path;
+    }
+
+    /**
      * Export data
      *
      * @return boolean TRUE if exported successfully or FALSE otherwise
