@@ -40,13 +40,6 @@ class Validator
     private $errors = [];
 
     /**
-     * Cache the validation result
-     *
-     * @var boolean
-     */
-    private $valid;
-
-    /**
      * Create Validatior object
      *
      * @param Form $form  Form object
@@ -67,10 +60,8 @@ class Validator
      */
     public function isValid():bool
     {
-        // Check for cached validation result
-        if ($this->valid !== null) {
-            return $this->valid;
-        }
+        // Validation status
+        $status = true;
 
         // Loop through form fields and validate passed data
         foreach ($this->form->getFields() as $field_name => $options) {
@@ -95,7 +86,7 @@ class Validator
             foreach ($rules as $rule) {
                 if (!$this->executeRule($rule, $field_name)) {
                     $rules_passed = false;
-                    $this->valid = false;
+                    $status = false;
                 }
             }
 
@@ -105,10 +96,7 @@ class Validator
             }
         }
 
-        // If it's null then the validation rules passed
-        $this->valid = $this->valid ?? true;
-
-        return $this->valid;
+        return $status;
     }
 
     /**
