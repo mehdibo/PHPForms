@@ -50,6 +50,19 @@ class ExportCSVTest extends \PHPUnit\Framework\TestCase
             $this->tearDown();
         }
 
+        // Setting file using the setFilePath method
+        foreach ($tests as $test) {
+            $csv = new \PHPForms\ExportCSV('', $test['data']);
+            $csv->setFilePath($this->file);
+            $this->assertEquals(true, $csv->export());
+
+            // Get file content
+            $file = file_get_contents($this->file);
+            $this->assertEquals($test['expected_result'], $file);
+
+            $this->tearDown();
+        }
+
         // Passing data using the addData method
         foreach ($tests as $test) {
             $csv = new \PHPForms\ExportCSV($this->file);
