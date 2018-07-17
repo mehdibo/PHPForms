@@ -28,9 +28,9 @@ class ExportDB extends Exporter
     public function __construct(\PDO $pdo, string $table = null, array $data = [], array $map = [])
     {
         $this->pdo = $pdo;
+        $this->table = $table;
         $this->data = $data;
         $this->map = $map;
-        $this->table = $table;
     }
 
     /**
