@@ -51,7 +51,6 @@ class Validator
      *
      * @param Form $form  Form object
      * @param array $data Data to validate
-     * @throws \PHPForms\RuleNotFound When validation rule doesn't exist
      * @param Validations $validations Validation rules
      */
     public function __construct(Form $form, array $data, Validation $validations)
@@ -117,6 +116,7 @@ class Validator
      *
      * @param string $rule Rule to execute
      * @param string $field_name Field to validate
+     * @throws \PHPForms\RuleNotFound When validation rule doesn't exist
      * @return boolean TRUE/FALSE if the data passed/didn't pass the rule
      */
     private function executeRule(string $rule, string $field_name):bool
