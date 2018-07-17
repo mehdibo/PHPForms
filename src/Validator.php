@@ -67,36 +67,68 @@ class Validator
         foreach ($this->form->getFields() as $field_name => $options) {
             // Data is always valid if there are no rules
             if (empty($options['rules'])) {
+                // If data submitted add it as valid
                 if (isset($this->data[$field_name])) {
                     $this->valid_data[$field_name] = $this->data[$field_name];
                 }
                 continue;
             }
 
+            $data = $this->data[$field_name] ?? '';
+
             // Get the field's rules and execute them all
-            $rules = explode('|', $options['rules']);
+            $rules = $this->parseRules($options['rules']);
 
             // Should we ignore this field?
-            if ($rules[0] === 'ignore') {
+            if (array_key_exists('ignore', $rules)) {
                 continue;
             }
 
-            // This will change to false as soon as one rule fails
-            $rules_passed = true;
-            foreach ($rules as $rule) {
-                if (!$this->executeRule($rule, $field_name)) {
-                    $rules_passed = false;
-                    $status = false;
+            // Execute all rules
+            $valid = true;
+            foreach ($rules as $rule => $args) {
+                if (!$this->executeRule($rule, $args, $data)) {
+                    // Get validation error
+                    $name = (empty($options['label'])) ? $field_name : $options['label'];
+                    $this->errors[] = $this->validations->getError($rule, $name, $args);
+
+                    $valid = false;
                 }
             }
 
             // If all the rules passed add data to $this->valid_data
-            if ($rules_passed) {
-                $this->valid_data[$field_name] = $this->data[$field_name];
+            if ($valid) {
+                $this->valid_data[$field_name] = $data;
+            } else {
+                $status = false;
             }
         }
 
         return $status;
+    }
+
+    /**
+     * Parse rules seperated by a pipe |
+     *
+     * @param string $rules Rules to parse seperated by a pipe |
+     * @return array Array of rules 'rule'=>'args'
+     */
+    private function parseRules(string $rules):array
+    {
+        // Parse rule and get args if any
+        foreach (explode('|', $rules) as $rule) {
+            // Extract arguments (the [...] part)
+            preg_match('/\[(.+)\]/m', $rule, $matches);
+
+            // If there are arguments seperate the rule from the args
+            if (!empty($matches)) {
+                $rule = str_replace($matches[0], '', $rule);
+            }
+
+            $parsed[$rule] = $matches[1] ?? null;
+        }
+
+        return $parsed;
     }
 
     /**
@@ -107,41 +139,14 @@ class Validator
      * @throws \PHPForms\RuleNotFound When validation rule doesn't exist
      * @return boolean TRUE/FALSE if the data passed/didn't pass the rule
      */
-    private function executeRule(string $rule, string $field_name):bool
+    private function executeRule(string $rule, ?string $args, string $data):bool
     {
-        // If the data for this field was not passed set it to an empty string
-        $this->data[$field_name] = $this->data[$field_name] ?? '';
-
-        // Extract arguments (the [...] part)
-        preg_match('/\[(.+)\]/m', $rule, $matches);
-
-        // If there are arguments seperate the rule from the args
-        if (!empty($matches)) {
-            $rule = str_replace($matches[0], '', $rule);
-        }
-
-        // Get the args if any or set it to null
-        $args = $matches[1] ?? null;
-
         // Check if the validation rule exists
         if (!method_exists($this->validations, $rule)) {
             throw new RuleNotFound("Rule '$rule' does not exist.");
         }
 
-        // Do the validation return true if succeeded
-        if (call_user_func_array([$this->validations, $rule], [$this->data[$field_name], $args])) {
-            return true;
-        }
-
-        // Validation failed get the error message
-
-        $field = $this->form->getField($field_name);
-        // If no label was passed use the name
-        $name = (empty($field['label'])) ? $field_name : $field['label'];
-
-        $this->errors[] = $this->validations->getError($rule, $name, $args);
-
-        return false;
+        return call_user_func_array([$this->validations, $rule], [$data, $args]);
     }
 
     /**
