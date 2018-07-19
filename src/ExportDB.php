@@ -62,10 +62,8 @@ class ExportDB extends Exporter
 
         // Prepare data to be concatenated to the query
         $table = '`'.str_replace("`", "``", $this->table).'`';
-        $columns = implode(', ', $columns);
-        $values = implode(', ', $values);
 
-        $query = 'INSERT INTO ' . $table . ' (' . $columns .') VALUE (' . $values . ')';
+        $query = 'INSERT INTO ' . $table . ' (' . implode(', ', $columns) .') VALUE (' . implode(', ', $values) . ')';
 
         // We prepare and execute the query
         return $this->pdo->prepare($query)->execute($this->data);
