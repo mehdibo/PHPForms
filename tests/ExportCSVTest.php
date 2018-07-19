@@ -26,7 +26,8 @@ class ExportCSVTest extends \PHPUnit\Framework\TestCase
                     'last_name'  => 'Bounya',
                     'comment'    => 'this is a test',
                 ],
-                'expected_result' => "first_name,last_name,comment\nMehdi,Bounya,\"this is a test\"\n",
+                'expected_result' => "first_name,last_name,comment\n"
+                                     ."Mehdi,Bounya,\"this is a test\"\n",
             ],
             [
                 'data' => [
@@ -34,7 +35,8 @@ class ExportCSVTest extends \PHPUnit\Framework\TestCase
                     'Last, name'  => 'Bounya',
                     'A,Comment;"'    => 'this is a test',
                 ],
-                'expected_result' => "\"First name\",\"Last, name\",\"A,Comment;\"\"\"\nMehdi,Bounya,\"this is a test\"\n",
+                'expected_result' => "\"First name\",\"Last, name\",\"A,Comment;\"\"\"\n"
+                                     ."Mehdi,Bounya,\"this is a test\"\n",
             ],
         ];
 
@@ -91,7 +93,8 @@ class ExportCSVTest extends \PHPUnit\Framework\TestCase
                     'last_name'  => 'Bounya',
                     'comment'    => 'this is a test',
                 ],
-                'expected_result' => "first_name,last_name,comment\nMehdi,Bounya,\"this is a test\"\n",
+                'expected_result' => "first_name,last_name,comment\n"
+                                     ."Mehdi,Bounya,\"this is a test\"\n",
             ],
             [
                 'data' => [
@@ -99,7 +102,9 @@ class ExportCSVTest extends \PHPUnit\Framework\TestCase
                     'last_name'  => 'World',
                     'comment'   => 'Another test',
                 ],
-                'expected_result' => "first_name,last_name,comment\nMehdi,Bounya,\"this is a test\"\nHello,World,\"Another test\"\n",
+                'expected_result' => "first_name,last_name,comment\n"
+                                     ."Mehdi,Bounya,\"this is a test\""
+                                     ."\nHello,World,\"Another test\"\n",
             ],
         ];
 
@@ -122,7 +127,8 @@ class ExportCSVTest extends \PHPUnit\Framework\TestCase
                     'last_name'  => 'Bounya',
                     'comment'    => 'this is a test',
                 ],
-                'expected_result' => "\"First name\",\"Last name\",comment\nMehdi,Bounya,\"this is a test\"\n",
+                'expected_result' => "\"First name\",\"Last name\",comment\n"
+                                     ."Mehdi,Bounya,\"this is a test\"\n",
             ],
             [
                 'data' => [
@@ -130,7 +136,8 @@ class ExportCSVTest extends \PHPUnit\Framework\TestCase
                     'last_name'  => 'World',
                     'comment'   => 'Another test',
                 ],
-                'expected_result' => "\"First name\",\"Last name\",comment\nHello,World,\"Another test\"\n",
+                'expected_result' => "\"First name\",\"Last name\",comment\n"
+                                     ."Hello,World,\"Another test\"\n",
             ],
         ];
 
@@ -160,7 +167,8 @@ class ExportCSVTest extends \PHPUnit\Framework\TestCase
                     'last_name'  => 'Bounya',
                     'comment'    => 'this is a test',
                 ],
-                'expected_result' => "\"First name\",\"Last name\",comment\nMehdi,Bounya,\"this is a test\"\n",
+                'expected_result' => "\"First name\",\"Last name\",comment\n"
+                                     ."Mehdi,Bounya,\"this is a test\"\n",
             ],
             [
                 'data' => [
@@ -168,7 +176,9 @@ class ExportCSVTest extends \PHPUnit\Framework\TestCase
                     'last_name'  => 'World',
                     'comment'   => 'Another test',
                 ],
-                'expected_result' => "\"First name\",\"Last name\",comment\nMehdi,Bounya,\"this is a test\"\nHello,World,\"Another test\"\n",
+                'expected_result' => "\"First name\",\"Last name\",comment\n"
+                                     ."Mehdi,Bounya,\"this is a test\""
+                                     ."\nHello,World,\"Another test\"\n",
             ],
         ];
         $map = [
@@ -205,7 +215,9 @@ class ExportCSVTest extends \PHPUnit\Framework\TestCase
                     'first_name' => 'Hello',
                     'last_name'  => 'World',
                 ],
-                'expected_result' => "first_name,last_name,comment\nMehdi,Bounya,\"This is a test\"\nHello,World,\"Another test\"\n",
+                'expected_result' => "first_name,last_name,comment\n"
+                                     ."Mehdi,Bounya,\"This is a test\"\n"
+                                     ."Hello,World,\"Another test\"\n",
             ],
         ];
 
@@ -243,7 +255,9 @@ class ExportCSVTest extends \PHPUnit\Framework\TestCase
                     'first_name' => 'Hello',
                     'last_name'  => 'World',
                 ],
-                'expected_result' => "\"First name\",\"Last name\",comment\nMehdi,Bounya,\"This is a test\"\nHello,World,\"Another test\"\n",
+                'expected_result' => "\"First name\",\"Last name\",comment\n"
+                                     ."Mehdi,Bounya,\"This is a test\""
+                                     ."\nHello,World,\"Another test\"\n",
             ],
         ];
 
