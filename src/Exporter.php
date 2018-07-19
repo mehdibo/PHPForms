@@ -19,13 +19,13 @@ abstract class Exporter
     protected $map;
 
     /**
-     * Add data to export
+     * Set data to export
      *
      * @param string $name  Column/Field name
      * @param string $value Value
      * @return void
      */
-    public function addData(string $name, string $value):void
+    public function setData(string $name, string $value):void
     {
         $this->data[$name] = $value;
     }
