@@ -63,12 +63,12 @@ class ExportCSVTest extends \PHPUnit\Framework\TestCase
             $this->tearDown();
         }
 
-        // Passing data using the addData method
+        // Passing data using the setData method
         foreach ($tests as $test) {
             $csv = new \PHPForms\ExportCSV($this->file);
 
             foreach ($test['data'] as $field => $value) {
-                $csv->addData($field, $value);
+                $csv->setData($field, $value);
             }
 
             $this->assertEquals(true, $csv->export());
