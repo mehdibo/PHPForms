@@ -37,6 +37,8 @@ class ExportDBTest extends \PHPUnit\Framework\TestCase
      */
     public static function setUpBeforeClass()
     {
+        self::$db = array_merge(self::$db, parse_ini_file("DB.ini"));
+
         $dsn = 'mysql:host='.self::$db['host'].';dbname='.self::$db['db'].';charset='.self::$db['charset'].'';
         self::$pdo = new \PDO($dsn, self::$db['user'], self::$db['pass'], self::$db['opt']);
     }
