@@ -210,4 +210,21 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals($test['expected_result'], $validator->getErrors());
         }
     }
+
+    public function testWeGetExceptionWhenRuleDoesntExist()
+    {
+        $this->expectException(\PHPForms\RuleNotFound::class);
+        $form = new \PHPForms\Form([
+            'field_name' => [
+                'label' => 'A label',
+                'rules' => 'inexistent_rule',
+            ]
+        ]);
+
+        $validations = new \PHPForms\Validations([]);
+
+        $validator = new \PHPForms\Validator($form, ['field_name' => 'value'], $validations);
+
+        $validator->isValid();
+    }
 }
