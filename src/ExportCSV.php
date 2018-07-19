@@ -42,7 +42,7 @@ class ExportCSV extends Exporter
      */
     public function export():bool
     {
-        // If the file doesn't exist or $append is false create a new file
+        // If the file doesn't exist create a new file
         if (!file_exists($this->file_path)) {
             return $this->newFile();
         }
