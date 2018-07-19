@@ -17,11 +17,11 @@ class ExportDBTest extends \PHPUnit\Framework\TestCase
      * @return void
      */
     protected static $db = [
-        'table' => 'testing',
         'host' => '127.0.0.1',
-        'db'   => 'phpforms_test',
         'user' => 'root',
         'pass' => '',
+        'db'   => 'phpforms_test',
+        'table' => 'testing',
         'charset' => 'utf8',
         'opt' => [
             \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
