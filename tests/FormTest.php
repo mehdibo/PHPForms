@@ -4,7 +4,6 @@ namespace PHPForms\Tests;
 
 class FormTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testWeCanGetFields()
     {
         $fields = [
@@ -90,22 +89,22 @@ class FormTest extends \PHPUnit\Framework\TestCase
             'id' => '<id>'
         ];
 
-        $expected_html = <<<HTML
-<form action="./index.php" class="a_class" id="&lt;id&gt;" method="POST">
-<input name="field_a" type="text" placeholder="Field A" class="a_class" id="an_id"><input name="field_b" type="text"><input name="field_c" type="text" class="&lt;danger'&quot;&gt;">
-</form>
-
-HTML;
+        $expected_html = '<form action="./index.php" class="a_class" id="&lt;id&gt;" method="POST">' . "\n"
+                         .'<input name="field_a" type="text" placeholder="Field A" class="a_class" id="an_id">'
+                         .'<input name="field_b" type="text">'
+                         .'<input name="field_c" type="text" class="&lt;danger\'&quot;&gt;">' . "\n"
+                         .'</form>' . "\n";
 
 
         $form = new \PHPForms\Form($fields, $attribs);
 
         $this->assertEquals($expected_html, $form->getHTML());
 
-        $expected_html = <<<HTML
-<form action="./index.php" class="a_class" id="&lt;id&gt;" method="POST"><input name="field_a" type="text" placeholder="Field A" class="a_class" id="an_id"><input name="field_b" type="text"><input name="field_c" type="text" class="&lt;danger'&quot;&gt;"></form>
-
-HTML;
+        $expected_html = '<form action="./index.php" class="a_class" id="&lt;id&gt;" method="POST">'
+                         .'<input name="field_a" type="text" placeholder="Field A" class="a_class" id="an_id">'
+                         .'<input name="field_b" type="text">'
+                         .'<input name="field_c" type="text" class="&lt;danger\'&quot;&gt;">'
+                         .'</form>' . "\n";
 
         $this->assertEquals($expected_html, $form->getHTML(false));
     }
