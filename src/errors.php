@@ -4,7 +4,7 @@
  * Error messages for validation rules
  *
  * {field} will be replaced with the field's name
- * {params} will be replaced with any passed arguments (inList[arg1,arg2...])
+ * {params} will be replaced with any passed arguments
  */
 return [
     'required'    => 'The {field} field is required.',
