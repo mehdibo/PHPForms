@@ -72,7 +72,7 @@ class ExportCSV extends Exporter
         // Loop through the columns
         $data = [];
         foreach ($columns as $column) {
-            $data[] = (empty($this->data[$column])) ? '' : $this->data[$column];
+            $data[] = $this->data[$column] ?? '';
         }
 
         return fputcsv($file, $data);
