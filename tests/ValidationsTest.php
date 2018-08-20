@@ -506,6 +506,83 @@ class ValidationsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
+    public function testLessThanOrEqualRuleWorks()
+    {
+        $tests = [
+            [
+                'data' => '5',
+                'len'  => '1',
+                'expected_result' => false,
+            ],
+            [
+                'data' => '12.5',
+                'len'  => '12',
+                'expected_result' => false,
+            ],
+            [
+                'data' => '100.02',
+                'len'  => '100',
+                'expected_result' => false,
+            ],
+            [
+                'data' => '100.09',
+                'len'  => '100.08',
+                'expected_result' => false,
+            ],
+
+            [
+                'data' => '1',
+                'len'  => '5',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '1',
+                'len'  => '1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '12',
+                'len'  => '12.5',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '100',
+                'len'  => '100.02',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '100.08',
+                'len'  => '100.09',
+                'expected_result' => true,
+            ],
+            [
+                'data' => '100.09',
+                'len'  => '100.09',
+                'expected_result' => true,
+            ],
+
+            [
+                'data' => '     ',
+                'len'  => '1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => "\t\n",
+                'len'  => '1',
+                'expected_result' => true,
+            ],
+            [
+                'data' => ' ',
+                'len'  => '0',
+                'expected_result' => true,
+            ],
+        ];
+
+        $validations = new \PHPForms\Validations([]);
+        foreach ($tests as $test) {
+            $this->assertEquals($test['expected_result'], $validations->lessThanEq($test['data'], $test['len']));
+        }
+    }
 
     public function testValidEmailRuleWorks()
     {
