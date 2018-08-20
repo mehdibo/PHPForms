@@ -129,6 +129,28 @@ class Validations extends Validation
     }
 
     /**
+     * Value must be greater than or equal to num
+     *
+     * @param string $value
+     * @param string $num
+     * @return boolean
+     */
+    public function greaterThanEq(string $value, string $num)
+    {
+        // If empty value then it's valid (so that optional inputs are possible)
+        if (empty(trim($value))) {
+            return true;
+        }
+
+        // Make sure $value and $num are numbers
+        if (!is_numeric($value) || !is_numeric($num)) {
+            return false;
+        }
+
+        return $value >= $num;
+    }
+
+    /**
      * Value must be less than num
      *
      * @param string $value
