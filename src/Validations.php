@@ -173,6 +173,28 @@ class Validations extends Validation
     }
 
     /**
+     * Value must be less than or equal to num
+     *
+     * @param string $value
+     * @param string $num
+     * @return boolean
+     */
+    public function lessThanEq(string $value, string $num):bool
+    {
+        // If empty value then it's valid (so that optional inputs are possible)
+        if (empty(trim($value))) {
+            return true;
+        }
+
+        // Make sure $value and $num are numbers
+        if (!is_numeric($value) || !is_numeric($num)) {
+            return false;
+        }
+
+        return $value <= $num;
+    }
+
+    /**
      * Value must be a valid e-mail
      *
      * @param string $value
